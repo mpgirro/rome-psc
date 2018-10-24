@@ -1,4 +1,4 @@
-package io.hemin.engine.parse.rss.rome;
+package com.rometools.modules.psc;
 
 import com.rometools.rome.feed.CopyFrom;
 import com.rometools.rome.feed.impl.EqualsBean;

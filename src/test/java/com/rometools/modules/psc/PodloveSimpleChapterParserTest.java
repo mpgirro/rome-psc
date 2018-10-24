@@ -1,4 +1,4 @@
-package echo.core.parse.rss;
+package com.rometools.modules.psc;
 
 import echo.core.domain.dto.EpisodeDTO;
 import echo.core.domain.dto.PodcastDTO;
@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
@@ -20,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Maximilian Irro
  */
-public class RomeFeedParserTest {
+public class PodloveSimpleChapterParserTest {
 
-    private static final Logger log = LoggerFactory.getLogger(RomeFeedParserTest.class);
+    private static final Logger log = LoggerFactory.getLogger(PodloveSimpleChapterParserTest.class);
 
     private static String feedData;
 
