@@ -1,4 +1,4 @@
-# rome-psc
+# Podlove Simple Chapter support for ROME
 
 [Podlove Simple Chapter](https://podlove.org/simple-chapters/) support for [ROME](https://rometools.github.io/rome/).
 
