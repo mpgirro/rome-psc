@@ -48,7 +48,7 @@ public class SimpleChapter implements CopyFrom {
 
     @Override
     public void copyFrom(CopyFrom obj) {
-        SimpleChapter item = (SimpleChapter) obj;
+        final SimpleChapter item = (SimpleChapter) obj;
         setStart(item.getStart());
         setTitle(item.getTitle());
         setHref(item.getHref());

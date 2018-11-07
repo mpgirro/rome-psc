@@ -15,7 +15,7 @@ import java.util.Locale;
 
 public class PodcastSimpleChapterParser implements ModuleParser {
 
-    private static final Namespace PSC_NS = Namespace.getNamespace(PodloveSimpleChapterModule.URI);
+    private static final Namespace NS = Namespace.getNamespace(PodloveSimpleChapterModule.URI);
 
     @Override
     public String getNamespaceUri() {
@@ -24,18 +24,18 @@ public class PodcastSimpleChapterParser implements ModuleParser {
 
     @Override
     public Module parse(Element element, Locale locale) {
-        final Element chaptersElement = element.getChild(PodloveSimpleChapterAttribute.CHAPTERS, PSC_NS);
+        final Element chaptersElement = element.getChild(PodloveSimpleChapterAttribute.CHAPTERS, NS);
         if (chaptersElement != null) {
-            final PodloveSimpleChapterModuleImpl mod = new PodloveSimpleChapterModuleImpl();
-            final List<Element> chapterElements = chaptersElement.getChildren(PodloveSimpleChapterAttribute.CHAPTER, PSC_NS);
-            if (!chapterElements.isEmpty()) {
+            final PodloveSimpleChapterModuleImpl m = new PodloveSimpleChapterModuleImpl();
+            final List<Element> es = chaptersElement.getChildren(PodloveSimpleChapterAttribute.CHAPTER, NS);
+            if (!es.isEmpty()) {
                 final List<SimpleChapter> result = new LinkedList<SimpleChapter>();
-                for (Element eChapter : chapterElements) {
-                    final SimpleChapter sc = parseChapter(eChapter);
-                    result.add(sc);
+                for (Element e : es) {
+                    final SimpleChapter c = parseChapter(e);
+                    result.add(c);
                 }
-                mod.setChapters(result);
-                return mod;
+                m.setChapters(result);
+                return m;
             }
         }
 
@@ -71,7 +71,7 @@ public class PodcastSimpleChapterParser implements ModuleParser {
     protected String getAttributeValue(Element e, String attributeName) {
         Attribute attr = e.getAttribute(attributeName);
         if (attr == null) {
-            attr = e.getAttribute(attributeName, PSC_NS);
+            attr = e.getAttribute(attributeName, NS);
         }
         if (attr != null) {
             return attr.getValue();
