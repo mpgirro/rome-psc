@@ -1,8 +1,8 @@
-package com.rometools.modules.psc;
+package com.rometools.modules.psc.types;
 
 import com.rometools.rome.feed.CopyFrom;
 
-public class PodloveSimpleChapterItem implements CopyFrom {
+public class SimpleChapter implements CopyFrom {
 
     private String start;
     private String title;
@@ -43,12 +43,12 @@ public class PodloveSimpleChapterItem implements CopyFrom {
 
     @Override
     public Class<? extends CopyFrom> getInterface() {
-        return PodloveSimpleChapterItem.class;
+        return SimpleChapter.class;
     }
 
     @Override
     public void copyFrom(CopyFrom obj) {
-        PodloveSimpleChapterItem item = (PodloveSimpleChapterItem) obj;
+        SimpleChapter item = (SimpleChapter) obj;
         setStart(item.getStart());
         setTitle(item.getTitle());
         setHref(item.getHref());
@@ -57,7 +57,7 @@ public class PodloveSimpleChapterItem implements CopyFrom {
 
     @Override
     public String toString() {
-        return "PodloveSimpleChapterItem{" +
+        return "SimpleChapter{" +
             "start='" + start + '\'' +
             ", title='" + title + '\'' +
             ", href='" + href + '\'' +

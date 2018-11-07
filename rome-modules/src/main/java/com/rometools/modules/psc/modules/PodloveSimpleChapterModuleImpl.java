@@ -1,5 +1,6 @@
-package com.rometools.modules.psc;
+package com.rometools.modules.psc.modules;
 
+import com.rometools.modules.psc.types.SimpleChapter;
 import com.rometools.rome.feed.CopyFrom;
 import com.rometools.rome.feed.impl.EqualsBean;
 import com.rometools.rome.feed.impl.ToStringBean;
@@ -11,19 +12,19 @@ import java.util.List;
 
 public class PodloveSimpleChapterModuleImpl extends ModuleImpl implements PodloveSimpleChapterModule, Cloneable, Serializable {
 
-    private List<PodloveSimpleChapterItem> chapters;
+    private List<SimpleChapter> chapters;
 
     public PodloveSimpleChapterModuleImpl() {
         super(PodloveSimpleChapterModule.class, PodloveSimpleChapterModule.URI);
     }
 
     @Override
-    public List<PodloveSimpleChapterItem> getChapters() {
-        return (chapters==null) ? (chapters= new LinkedList<>()) : chapters;
+    public List<SimpleChapter> getChapters() {
+        return (chapters==null) ? (chapters= new LinkedList<SimpleChapter>()) : chapters;
     }
 
     @Override
-    public void setChapters(List<PodloveSimpleChapterItem> chapters) {
+    public void setChapters(List<SimpleChapter> chapters) {
         this.chapters = chapters;
     }
 
@@ -35,9 +36,9 @@ public class PodloveSimpleChapterModuleImpl extends ModuleImpl implements Podlov
     @Override
     public void copyFrom(CopyFrom obj) {
         final PodloveSimpleChapterModule mod = (PodloveSimpleChapterModule) obj;
-        final List<PodloveSimpleChapterItem> chapters = new LinkedList<>();
-        for(PodloveSimpleChapterItem chapter : mod.getChapters()) {
-            final PodloveSimpleChapterItem sc = new PodloveSimpleChapterItem();
+        final List<SimpleChapter> chapters = new LinkedList<SimpleChapter>();
+        for(SimpleChapter chapter : mod.getChapters()) {
+            final SimpleChapter sc = new SimpleChapter();
             sc.copyFrom(chapter);
             chapters.add(sc);
         }
@@ -52,9 +53,9 @@ public class PodloveSimpleChapterModuleImpl extends ModuleImpl implements Podlov
     @Override
     public Object clone() throws CloneNotSupportedException {
         final PodloveSimpleChapterModuleImpl mod = new PodloveSimpleChapterModuleImpl();
-        final List<PodloveSimpleChapterItem> result = new LinkedList<>();
-        for (PodloveSimpleChapterItem chapter : this.chapters){
-            PodloveSimpleChapterItem sc = new PodloveSimpleChapterItem();
+        final List<SimpleChapter> result = new LinkedList<SimpleChapter>();
+        for (SimpleChapter chapter : this.chapters){
+            SimpleChapter sc = new SimpleChapter();
             sc.copyFrom(chapter);
             result.add(sc);
         }

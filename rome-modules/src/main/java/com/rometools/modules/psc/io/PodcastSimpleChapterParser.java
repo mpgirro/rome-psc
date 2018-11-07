@@ -1,5 +1,8 @@
-package com.rometools.modules.psc;
+package com.rometools.modules.psc.io;
 
+import com.rometools.modules.psc.types.SimpleChapter;
+import com.rometools.modules.psc.modules.PodloveSimpleChapterModule;
+import com.rometools.modules.psc.modules.PodloveSimpleChapterModuleImpl;
 import com.rometools.rome.feed.module.Module;
 import com.rometools.rome.io.ModuleParser;
 import org.jdom2.Attribute;
@@ -21,14 +24,14 @@ public class PodcastSimpleChapterParser implements ModuleParser {
 
     @Override
     public Module parse(Element element, Locale locale) {
-        final Element chaptersElement = element.getChild("chapters", PSC_NS);
+        final Element chaptersElement = element.getChild(PodloveSimpleChapterAttribute.CHAPTERS, PSC_NS);
         if (chaptersElement != null) {
             final PodloveSimpleChapterModuleImpl mod = new PodloveSimpleChapterModuleImpl();
-            final List<Element> chapterElements = chaptersElement.getChildren("chapter", PSC_NS);
+            final List<Element> chapterElements = chaptersElement.getChildren(PodloveSimpleChapterAttribute.CHAPTER, PSC_NS);
             if (!chapterElements.isEmpty()) {
-                final List<PodloveSimpleChapterItem> result = new LinkedList<>();
+                final List<SimpleChapter> result = new LinkedList<SimpleChapter>();
                 for (Element eChapter : chapterElements) {
-                    final PodloveSimpleChapterItem sc = parseChapter(eChapter);
+                    final SimpleChapter sc = parseChapter(eChapter);
                     result.add(sc);
                 }
                 mod.setChapters(result);
@@ -39,22 +42,27 @@ public class PodcastSimpleChapterParser implements ModuleParser {
         return null;
     }
 
-    private PodloveSimpleChapterItem parseChapter(Element eChapter) {
-        final PodloveSimpleChapterItem chapter = new PodloveSimpleChapterItem();
+    private SimpleChapter parseChapter(Element eChapter) {
+        final SimpleChapter chapter = new SimpleChapter();
 
-        final String start = getAttributeValue(eChapter, "start");
+        final String start = getAttributeValue(eChapter, PodloveSimpleChapterAttribute.START);
         if (start != null) {
             chapter.setStart(start);
         }
 
-        final String title = getAttributeValue(eChapter, "title");
+        final String title = getAttributeValue(eChapter, PodloveSimpleChapterAttribute.TITLE);
         if (title != null) {
             chapter.setTitle(title);
         }
 
-        final String href = getAttributeValue(eChapter, "href");
+        final String href = getAttributeValue(eChapter, PodloveSimpleChapterAttribute.HREF);
         if (href != null) {
             chapter.setHref(href);
+        }
+
+        final String image = getAttributeValue(eChapter, PodloveSimpleChapterAttribute.IMAGE);
+        if (image != null) {
+            chapter.setImage(image);
         }
 
         return chapter;
