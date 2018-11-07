@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class PodcastSimpleChapterParser implements ModuleParser {
+public class PodloveSimpleChapterParser implements ModuleParser {
 
     private static final Namespace NS = Namespace.getNamespace(PodloveSimpleChapterModule.URI);
 

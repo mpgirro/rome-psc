@@ -1,115 +1,59 @@
 package com.rometools.modules.psc;
 
-import echo.core.domain.dto.EpisodeDTO;
-import echo.core.domain.dto.PodcastDTO;
-import echo.core.exception.FeedParsingException;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.function.Executable;
+import com.rometools.modules.AbstractTestCase;
+import com.rometools.modules.psc.io.PodloveSimpleChapterParser;
+import com.rometools.modules.psc.modules.PodloveSimpleChapterModule;
+import com.rometools.modules.psc.types.SimpleChapter;
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
+import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.stream.Collectors;
+import java.io.File;
 
-import static com.google.common.base.Strings.isNullOrEmpty;
-import static org.junit.jupiter.api.Assertions.*;
-
-/**
- * @author Maximilian Irro
- */
-public class PodloveSimpleChapterParserTest {
+public class PodloveSimpleChapterParserTest extends AbstractTestCase {
 
     private static final Logger log = LoggerFactory.getLogger(PodloveSimpleChapterParserTest.class);
 
-    private static String feedData;
-
-    @BeforeAll
-    static void setup() throws IOException {
-        feedData = Files.lines(Paths.get("src","test","resources","testfeed.xml")).collect(Collectors.joining("\n"));
+    public PodloveSimpleChapterParserTest(final String testName) {
+        super(testName);
     }
 
-    @AfterAll
-    static void done() {
-
+    @Override
+    protected void setUp() {
     }
 
-    @BeforeEach
-    void init() {
-
+    @Override
+    protected void tearDown() {
     }
 
-    @AfterEach
-    void tearDown() {
-
+    public static junit.framework.Test suite() {
+        return new TestSuite(PodloveSimpleChapterParserTest.class);
     }
 
-    @DisplayName("All Podcast fields are not null or empty")
-    @Test
-    void test_podcastFieldAreParsed() throws FeedParsingException {
-        final FeedParser parser = RomeFeedParser.of(feedData);
-        final PodcastDTO p = parser.getPodcast();
+    public void testParse() throws Exception {
 
-        assertFalse(isNullOrEmpty(p.getTitle()), "<title> is null or empty");
-        assertFalse(isNullOrEmpty(p.getLink()), "<link> is null or empty");
-        assertFalse(isNullOrEmpty(p.getDescription()), "<description> is null or empty");
-        assertFalse(isNullOrEmpty(p.getCopyright()), "<copyright> is null or empty");
-        assertFalse(isNullOrEmpty(p.getDocs()), "<doc> is null or empty");
-        assertFalse(isNullOrEmpty(p.getGenerator()), "<generator> is null or empty");
-        assertFalse(isNullOrEmpty(p.getImage()), "<image> is null or empty");
-        assertFalse(isNullOrEmpty(p.getItunesAuthor()), "<itunes:author> is null or empty");
-        assertFalse(isNullOrEmpty(p.getItunesKeywords()), "<itunes:keywords> is null or empty");
-        assertFalse(isNullOrEmpty(p.getItunesOwnerEmail()), "<itunes:owner><itunes:email> is null or empty");
-        assertFalse(isNullOrEmpty(p.getItunesOwnerName()), "<itunes:owner><itunes:name> is null or empty");
-        assertFalse(isNullOrEmpty(p.getItunesSummary()), "<itunes:summary> is null or empty");
-        assertFalse(isNullOrEmpty(p.getItunesType()), "<itunes:type> is null or empty");
-        assertNotNull(p.getItunesExplicit(), "<itunes:explicit> is null or empty");
-        assertNotNull(p.getItunesBlock(), "<itunes:block> is null or empty");
-        assertNotNull(p.getItunesCategories(), "<itunes:category>> is null");
-        assertNotEquals(0, p.getItunesCategories().size());
-        p.getItunesCategories().stream()
-            .forEach(c -> assertFalse(isNullOrEmpty(c), "<itunes:category> is null or empty"));
-    }
+        log.debug("testParse");
 
-    @DisplayName("All Episodes are found")
-    @Test
-    void test_episodesEpisodesAreFound() throws FeedParsingException {
-        final FeedParser parser = RomeFeedParser.of(feedData);
-        assertEquals(2, parser.getEpisodes().size());
-    }
+        final SyndFeedInput input = new SyndFeedInput();
+        final SyndFeed feed = input.build(new XmlReader(new File(getTestFile("psc/test1.xml")).toURI().toURL()));
+        final SyndEntry entry = feed.getEntries().get(0);
+        final PodloveSimpleChapterModule module = (PodloveSimpleChapterModule) entry.getModule(PodloveSimpleChapterModule.URI);
 
-    @DisplayName("All Episodes are found")
-    //@Test // TODO add this test once I've fixed the problem
-    void test_episodeFieldsAreParsed() throws FeedParsingException {
-        final FeedParser parser = RomeFeedParser.of(feedData);
-        for (EpisodeDTO e : parser.getEpisodes()) {
-            log.info(e.getGuid());
-            assertFalse(isNullOrEmpty(e.getTitle()), "<title> is null or empty");
-            assertFalse(isNullOrEmpty(e.getLink()), "<link> is null or empty");
-            assertFalse(isNullOrEmpty(e.getDescription()), "<description> is null or empty");
-            assertFalse(isNullOrEmpty(e.getGuid()), "<guid> is null or empty");
-            assertNotNull(e.getGuidIsPermaLink(), "<guid isPermaLink> is null or empty");
-            assertFalse(isNullOrEmpty(e.getImage()), "<image> is null or empty");
-            assertFalse(isNullOrEmpty(e.getItunesAuthor()), "<itunes:author> is null or empty");
-            assertFalse(isNullOrEmpty(e.getItunesDuration()), "<itunes:duration> is null or empty");
-            assertFalse(isNullOrEmpty(e.getItunesSummary()), "<itunes:summary> is null or empty");
-            assertFalse(isNullOrEmpty(e.getItunesSubtitle()), "<itunes:subtitle> is null or empty");
-            assertFalse(isNullOrEmpty(e.getItunesEpisodeType()), "<itunes:episodeType> is null or empty");
-            assertNotNull(e.getItunesSeason(), "<itunes:explicit> is null or empty");
-            assertNotNull(e.getItunesEpisode(), "<itunes:block> is null or empty");
-            assertNotNull(e.getEnclosureLength(), "<enclosure length> is null");
-            assertFalse(isNullOrEmpty(e.getEnclosureType()), "<enclosure type> is null or empty");
-            assertFalse(isNullOrEmpty(e.getEnclosureUrl()), "<enclosure url> is null or empty");
-            assertFalse(isNullOrEmpty(e.getContentEncoded()), "<content:encoded> is null or empty");
-            e.getChapters().stream()
-                .forEach(c -> {
-                    assertFalse(isNullOrEmpty(c.getTitle()), "<psc:chapter title> is null or empty");
-                    assertFalse(isNullOrEmpty(c.getHref()), "<psc:chapter href> is null or empty");
-                    assertFalse(isNullOrEmpty(c.getImage()), "<psc:chapter image> is null or empty");
-                    assertFalse(isNullOrEmpty(c.getStart()), "<psc:chapter start> is null or empty");
-                });
+        for (SimpleChapter c : module.getChapters()) {
+            assertEquals("00:00:00.000", c.getStart());
+            assertEquals("Lorem Ipsum", c.getTitle());
+            assertEquals("http://example.org", c.getHref());
+            assertEquals("http://example.org/cover", c.getImage());
         }
+
+    }
+
+    public void testGetNamespaceUri() {
+        assertEquals("Namespace", PodloveSimpleChapterModule.URI, new PodloveSimpleChapterParser().getNamespaceUri());
     }
 
 }
