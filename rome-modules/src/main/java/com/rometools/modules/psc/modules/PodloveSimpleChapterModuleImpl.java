@@ -10,7 +10,9 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PodloveSimpleChapterModuleImpl extends ModuleImpl implements PodloveSimpleChapterModule, Cloneable, Serializable {
+public class PodloveSimpleChapterModuleImpl
+        extends ModuleImpl
+        implements PodloveSimpleChapterModule, Cloneable, Serializable {
 
     private List<SimpleChapter> chapters;
 
@@ -24,7 +26,7 @@ public class PodloveSimpleChapterModuleImpl extends ModuleImpl implements Podlov
     }
 
     @Override
-    public void setChapters(List<SimpleChapter> chapters) {
+    public void setChapters(final List<SimpleChapter> chapters) {
         this.chapters = chapters;
     }
 
@@ -34,7 +36,7 @@ public class PodloveSimpleChapterModuleImpl extends ModuleImpl implements Podlov
     }
 
     @Override
-    public void copyFrom(CopyFrom obj) {
+    public void copyFrom(final CopyFrom obj) {
         final PodloveSimpleChapterModule mod = (PodloveSimpleChapterModule) obj;
         final List<SimpleChapter> chapters = new LinkedList<SimpleChapter>();
         for(SimpleChapter chapter : mod.getChapters()) {

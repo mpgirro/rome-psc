@@ -6,6 +6,7 @@ public interface PodloveSimpleChapterAttribute {
 
     // name of the list of chapters
     String CHAPTERS = "chapters";
+    String VERSION = "version";
 
     // name of a chapter entry
     String CHAPTER = "chapter";

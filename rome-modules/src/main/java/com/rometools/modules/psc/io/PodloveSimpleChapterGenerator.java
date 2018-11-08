@@ -41,15 +41,19 @@ public class PodloveSimpleChapterGenerator implements ModuleGenerator {
         }
     }
 
-    private void generateChapters(List<SimpleChapter> chapters, Element element) {
+    private void generateChapters(final List<SimpleChapter> chapters, final Element parent) {
         final Element cs = new Element(PodloveSimpleChapterAttribute.CHAPTERS, NS);
+
+        cs.setAttribute(PodloveSimpleChapterAttribute.VERSION, PodloveSimpleChapterModule.VERSION);
+
         for (SimpleChapter c : chapters) {
             cs.addContent(generateChapter(c));
         }
-        element.addContent(cs);
+
+        parent.addContent(cs);
     }
 
-    private Element generateChapter(SimpleChapter c) {
+    private Element generateChapter(final SimpleChapter c) {
         final Element e = new Element(PodloveSimpleChapterAttribute.CHAPTER, NS);
 
         addNotNullAttribute(e, PodloveSimpleChapterAttribute.START, c.getStart());

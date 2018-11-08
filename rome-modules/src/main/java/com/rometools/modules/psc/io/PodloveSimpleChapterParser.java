@@ -23,7 +23,7 @@ public class PodloveSimpleChapterParser implements ModuleParser {
     }
 
     @Override
-    public Module parse(Element element, Locale locale) {
+    public Module parse(final Element element, final Locale locale) {
         final Element chaptersElement = element.getChild(PodloveSimpleChapterAttribute.CHAPTERS, NS);
         if (chaptersElement != null) {
             final PodloveSimpleChapterModuleImpl m = new PodloveSimpleChapterModuleImpl();
@@ -42,7 +42,7 @@ public class PodloveSimpleChapterParser implements ModuleParser {
         return null;
     }
 
-    private SimpleChapter parseChapter(Element eChapter) {
+    private SimpleChapter parseChapter(final Element eChapter) {
         final SimpleChapter chapter = new SimpleChapter();
 
         final String start = getAttributeValue(eChapter, PodloveSimpleChapterAttribute.START);
@@ -68,7 +68,7 @@ public class PodloveSimpleChapterParser implements ModuleParser {
         return chapter;
     }
 
-    protected String getAttributeValue(Element e, String attributeName) {
+    protected String getAttributeValue(final Element e, final String attributeName) {
         Attribute attr = e.getAttribute(attributeName);
         if (attr == null) {
             attr = e.getAttribute(attributeName, NS);
