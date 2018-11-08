@@ -2,4 +2,4 @@
 
 [Podlove Simple Chapter](https://podlove.org/simple-chapters/) support for [ROME](https://rometools.github.io/rome/).
 
-This repository will be integrated into [rome-modules](https://github.com/rometools/rome/tree/master/rome-modules).
+There is a [pull request](https://github.com/rometools/rome/pull/400) to integrate this plug in into [rome-modules](https://github.com/rometools/rome/tree/master/rome-modules).
